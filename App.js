@@ -1,7 +1,8 @@
-import { FlatList, ScrollView, StyleSheet, Text, View, SectionList } from 'react-native';
+import { FlatList, ScrollView,TextInput, StyleSheet, Text, View, SectionList,Button } from 'react-native';
 import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
-import Login from './Login';
+import React, { useState } from 'react';
+//import Login from './Login';
 
 const allVehicles = [ 
   {
@@ -59,6 +60,7 @@ const allVehicles = [
 ]
 
 export default function App() {
+  
 
 // Render the headers of section. Note that the input prop is section and we're using 'type' attribute inside
 const renderSectionHeader = ({ section }) => {
@@ -73,6 +75,15 @@ const renderVehicleModelItem = ({ item }) => {
     </View>
   );
 }  
+
+const [value, getValue] = useState('');
+
+const setValue = (messgae) => {
+  getValue(messgae);
+};
+
+const onSubmit = () => {
+};
   
 // Separator separates items. We're only using an empty view with border for now
 const itemSeparatorComponent = () => <View style={{ borderColor: 'black', borderStyle: "dotted", borderWidth: 1 }}></View>;
@@ -80,9 +91,9 @@ const itemSeparatorComponent = () => <View style={{ borderColor: 'black', border
   return (
     // Demo: Section List
     <View style={styles.container}>
-      {/* Attach header component */}
-      <AppHeader />
-      <Login />
+      <AppHeader props={"Baham (باہم)"}>
+      </AppHeader>
+      {/* <Login /> */}
       <View style={styles.mainContainer}>
         <SectionList 
         sections={allVehicles}
@@ -91,9 +102,17 @@ const itemSeparatorComponent = () => <View style={{ borderColor: 'black', border
         ItemSeparatorComponent={itemSeparatorComponent}
         keyExtractor={(item, index) => item.id * (item.id + index)}
         />
+        <TextInput
+          style={styles.feedbackform}
+          multiline
+          value={value}
+          onChangeText={setValue}
+          placeholder="Please Give Us Your Feedback"
+        />
+        <Button title="Submit" onPress={onSubmit} />
       </View>
-      {/* Attach footer component */}
-      <AppFooter />
+      <AppFooter footertext1={"Copyright: Baham by project Dareecha (2023) -"} footertext2={"Karachi Institute of Economics & Technology"} slogan={"Connecting People, Connecting Lives"}>
+      </AppFooter>
     </View>
   );
 }
@@ -113,5 +132,14 @@ const styles = StyleSheet.create({
     margin: 12,
     fontSize: 16,
     color: 'maroon'
+  },
+  feedbackform: {
+    height: 80,
+    margin: 15,
+    padding: 15,
+    borderRadius : 15,
+    borderWidth: 2,
+    borderColor: 'black',
+    
   }
 });
